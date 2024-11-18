@@ -46,7 +46,7 @@ export default function MyApp() {
 
 
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-          Please Login Or Register To View our Finest Doughnuts
+          Lets put Login fun stuff here in!
           </Box>
     </Box>
   );

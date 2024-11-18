@@ -1,19 +1,14 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+}
+
+.css-ptdwpq-MuiPaper-root-MuiAppBar-root {
+  background-color: black;
+}
+.css-1bv5yfe-MuiTypography-root {
+  background-color: Green;
+  border-radius: 5px;
 }
 
 body {
@@ -21,7 +16,6 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -33,10 +27,4 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }

@@ -13,14 +13,28 @@ import {useState} from 'react';
 
 export default function MyApp() {
 
-  return (
+  const handleSubmit = (event) => {
+
+
+    console.log("handling submit");
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    let email = data.get('email')
+    let pass = data.get('pass')
+    let acc_type = data.get('acc_type')
+    console.log("Sent email:" + email)
+    console.log("Sent pass:" + pass)
+    console.log("Sent acc_type:" + acc_type)
+
+    runDBCallAsync(`http://localhost:3000/api/login?email=${email}&pass=${pass}&acc_type=${acc_type}`)
+  };
 
     <Box sx={{ flexGrow: 1 }}>
 
       <AppBar position="static">
 
         <Toolbar>
-
+  
           <IconButton
             size="large"
             edge="start"
@@ -46,9 +60,8 @@ export default function MyApp() {
 
 
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-          Please Login Or Register To View our Finest Doughnuts
+          Lets put Login fun stuff here in!
           </Box>
     </Box>
-  );
-
+  
 }

@@ -1,0 +1,10 @@
+MongoDB credentials - KrispyKremeDB
+
+Username:
+b00149694
+
+Password:
+AdFSCKDDixpyPWZI
+
+URL For The Database:
+mongodb+srv://b00149694:AdFSCKDDixpyPWZI@krispykremedb.hwsne.mongodb.net/?retryWrites=true&w=majority&appName=KrispyKremeDB
