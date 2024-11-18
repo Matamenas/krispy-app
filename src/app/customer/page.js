@@ -122,7 +122,7 @@ function runShowFirst(){
       {showLogin &&
 
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-          This box is hidden until you click the button!. Imagine this is one page in your app!
+          This box is hidden until you click the button! Imagine this is one page in your app!
           </Box>
 
       }
