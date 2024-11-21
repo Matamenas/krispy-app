@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 export default function MyApp() {
 
@@ -25,12 +25,11 @@ export default function MyApp() {
         console.log('No session found.');
       }
     }
-  
     fetchSession();
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/getProducts')
+    fetch('http://localhost:3000/api/getCart')
       .then((res) => res.json())
       .then((data) => {
         setData(data)
@@ -49,10 +48,7 @@ export default function MyApp() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Krispy Kreme
           </Typography>
-
-          <Button color="inherit" href='/login'>Login</Button>
-          <Button color="inherit" href='/register'>Register</Button>
-
+          <Button color="inherit" href='/customer'>Forgot Something?</Button>
         </Toolbar>
       </AppBar>
 
@@ -61,26 +57,17 @@ export default function MyApp() {
       <div>
         {data.map((item, i) => (
           <div style={{ padding: '20px', display: 'flex', alignItems: 'center' }} key={i}>
-            {/* Image */}
-            {item.image && (
-              <img
-                src={item.image}
-                alt={item.pname}
-                style={{ width: '80px', height: '80px', objectFit: 'cover', marginRight: '15px' }}
-              />
-            )}
             {/* Text Content */}
             <div>
               <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.pname}</div>
               <div style={{ fontSize: '13px'}}>{item.pdesc}</div>
               <div>&euro;{item.price}</div>
-              <Button /* onClick={() =>  putInCart(item.pname, item.price)} */ variant="outlined">
-                Add to cart
-              </Button>
             </div>
           </div>
         ))}
       </div>
+      <Button color="green" href='/checkout'>Checkout</Button>
+
     </Box>
     </Box>
   );

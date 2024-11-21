@@ -27,8 +27,8 @@ export default function MyApp() {
             Krispy Kreme
           </Typography>
 
-          <Button color="inherit" href='/login'>Login</Button>
-          <Button color="inherit" href='/register'>Register</Button>
+
+          <Button color="inherit" href='/view_cart'>Forgot Something?</Button>
 
         </Toolbar>
       </AppBar>

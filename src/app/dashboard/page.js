@@ -36,7 +36,9 @@ export default function MyApp() {
 
 
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-          Please Login Or Register To View our Finest Doughnuts
+          <p id='welcome'>Please Login Or Register To View our Finest Doughnuts</p>
+          <br></br>
+          <div id='homer'><img src="Images/homer.png" alt='Homer Munching Donut'></img></div>
           </Box>
     </Box>
   );

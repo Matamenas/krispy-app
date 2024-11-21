@@ -13,9 +13,8 @@ import {useState, useEffect} from 'react';
 
 export default function MyApp() {
 
-  const [showLogin, setShowLogin] = useState(false);
-  const [showDash, setShowDash] = useState(false);
-  const [showFirstPage, setShowFirstPage] = useState(true);
+  const [showWeather, setShowWeather] = useState(false);
+  const [showProducts, setShowProducts] = useState(true);
   
   // Weather API initialiastion 
   const [weather, setWeatherData] = useState([])
@@ -58,22 +57,18 @@ export default function MyApp() {
     fetch(`http://localhost:3000/api/putInCart?pname=${pname}&price=${price}`)
   }
 
-  function runShowLogin(){
-      setShowFirstPage(false)
-      setShowLogin(true);
-      setShowDash(false)
-  }
-
-  function runShowDash(){
-    setShowFirstPage(false);
-    setShowLogin(false);
-    setShowDash(true)
+  function runShowWeather(){
+    setShowProducts(false);
+    setShowWeather(true)
 }
 
-function runShowFirst(){
-  setShowFirstPage(true);
-  setShowLogin(false);
-  setShowDash(false)
+function runShowProducts(){
+  setShowProducts(true);
+  setShowWeather(false)
+}
+
+function logOut(){
+  session.destroy();
 }
 
   return (
@@ -89,54 +84,43 @@ function runShowFirst(){
             Krispy Kreme
           </Typography>
 
-          <Button color="inherit" onClick={runShowFirst}>Products</Button>
-          <Button color="inherit" onClick={runShowDash}>Weather</Button>
-          <Button color="inherit" onClick={runShowLogin}>Login</Button>
+          <Button color="inherit" onClick={runShowProducts}><img src='Images/products_image.png'></img>Products</Button>
+          <Button color="inherit" onClick={runShowWeather}><img src='Images/cloudy.png'></img>Weather</Button>
+          <Button color="inherit" href='/view_cart'><img src='Images/shopping-cart.png' alt='Basket'></img>&nbsp;Basket</Button>
 
         </Toolbar>
       </AppBar>
 
-
-
-      {showFirstPage &&
-    <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-      <div style={{ fontSize: '40px' }}> Finest Doughnuts</div>
-      <div>
-        {data.map((item, i) => (
-          <div style={{ padding: '20px', display: 'flex', alignItems: 'center' }} key={i}>
-            {/* Image */}
-            {item.image && (
-              <img
-                src={item.image}
-                alt={item.pname}
-                style={{ width: '80px', height: '80px', objectFit: 'cover', marginRight: '15px' }}
-              />
-            )}
-            {/* Text Content */}
-            <div>
-              <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.pname}</div>
-              <div style={{ fontSize: '13px'}}>{item.pdesc}</div>
-              <div>&euro;{item.price}</div>
-              <Button onClick={() => putInCart(item.pname, item.price)} variant="outlined">
-                Add to cart
-              </Button>
+    {showProducts &&
+      <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+        <div style={{ fontSize: '40px' }}> Finest Doughnuts</div>
+        <div>
+          {data.map((item, i) => (
+            <div style={{ padding: '20px', display: 'flex', alignItems: 'center' }} key={i}>
+              {/* Image */}
+              {item.image && (
+                <img
+                  src={item.image}
+                  alt={item.pname}
+                  style={{ width: '80px', height: '80px', objectFit: 'cover', marginRight: '15px' }}
+                />
+              )}
+              {/* Text Content */}
+              <div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.pname}</div>
+                <div style={{ fontSize: '13px'}}>{item.pdesc}</div>
+                <div>&euro;{item.price}</div>
+                <Button onClick={() => putInCart(item.pname, item.price)} variant="outlined">
+                  Add to cart
+                </Button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </Box>
-
+          ))}
+        </div>
+      </Box>
       }
 
-      {showLogin &&
-
-          <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-          This box is hidden until you click the button! Imagine this is one page in your app!
-          </Box>
-
-      }
-
-    {showDash &&
+    {showWeather &&
 
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
      

@@ -32,3 +32,15 @@ a {
 .css-did544-MuiButtonBase-root-MuiButton-root{
   background-color: green;
 }
+
+#homer {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+#welcome {
+  font-size: x-large;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
