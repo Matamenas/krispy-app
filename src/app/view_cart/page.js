@@ -14,6 +14,7 @@ import {useState, useEffect} from 'react';
 export default function MyApp() {
 
   const [data, setData] = useState([])
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     async function fetchSession() {
@@ -33,8 +34,18 @@ export default function MyApp() {
       .then((res) => res.json())
       .then((data) => {
         setData(data)
+
+        // Calculate the total
+        const total = data.reduce((sum, item) => {
+          const price = parseFloat(item.price) || 0;
+          return sum + price;
+        }, 0);
+
+        setTotalPrice(total);
       })
   }, [])
+
+
 
   return (
 
@@ -61,12 +72,17 @@ export default function MyApp() {
             <div>
               <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.pname}</div>
               <div style={{ fontSize: '13px'}}>{item.pdesc}</div>
-              <div>&euro;{item.price}</div>
+              <div>&euro;{parseFloat(item.price).toFixed(2)}</div>
             </div>
           </div>
         ))}
       </div>
-      <Button color="green" href='/checkout'>Checkout</Button>
+
+      { /* Total Price here*/ }
+      <div style={{fontSize: '20px', fontWeight: 'bold', marginTop: '20px'}}>
+        Total Price: &euro;{(totalPrice).toFixed(2)}
+      </div>
+      <Button color="success" href='/checkout'>Checkout</Button>
 
     </Box>
     </Box>

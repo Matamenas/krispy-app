@@ -14,7 +14,7 @@ export async function GET(req, res){
     const price = searchParams.get('price')
 
     console.log(pname);
-    console.log(price);
+    console.log(price)
     // <-------------------------------------->
     //             Database call
 
@@ -28,7 +28,7 @@ export async function GET(req, res){
     await client.connect();
     console.log('Connected successfully to server');
     const db = client.db(dbName);
-    const collection = db.collection('shopping_cart'); // collection name
+    const collection = db.collection('orders'); // collection name
 
     var myobj = { pname: pname, price: price, username: session.email};
     const insertResult = await collection.insertOne(myobj);

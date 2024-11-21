@@ -66,11 +66,10 @@ export default function MyApp() {
         <img src="Images/logo.png" width="64px" height="64px"></img>
         <Button color="inherit" href='../dashboard'>Home</Button>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Krispy Kreme
+            Krispy Kreme Register
           </Typography>
-
+          &nbsp; Have An Account?: 
           <Button color="inherit" href='/login'>Login</Button>
-          <Button color="inherit" href='/register'>Register</Button>
 
         </Toolbar>
       </AppBar>
