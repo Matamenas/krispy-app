@@ -22,6 +22,21 @@ export default function MyApp() {
 
   // This is for getting the products
   const [data, setData] = useState([])
+
+  useEffect(() => {
+    async function fetchSession() {
+      const response = await fetch('/api/getSession');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Session Data:', data);
+      } else {
+        console.log('No session found.');
+      }
+    }
+  
+    fetchSession();
+  }, []);
+  
  
     useEffect(() => {
       fetch('http://localhost:3000/api/getProducts')
@@ -30,18 +45,17 @@ export default function MyApp() {
           setData(data)
         })
 
-
         // call the api for getting weather
         fetch('http://localhost:3000/api/getWeather')
           .then((res) => res.json()) 
           .then((weather) => {
             setWeatherData(weather)
         })
-}, [])
+    }, [])
 
   function putInCart(pname, price){
     console.log("Item %s Price %f added to cart", pname, price)
-    fetch(`http://localhost:3000/api/putInCart?pname=${encodeURIComponent(pname)}&price=${price}`)
+    fetch(`http://localhost:3000/api/putInCart?pname=${pname}&price=${price}`)
   }
 
   function runShowLogin(){

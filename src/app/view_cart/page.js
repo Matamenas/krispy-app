@@ -13,6 +13,30 @@ import {useState} from 'react';
 
 export default function MyApp() {
 
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    async function fetchSession() {
+      const response = await fetch('/api/getSession');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Session Data:', data);
+      } else {
+        console.log('No session found.');
+      }
+    }
+  
+    fetchSession();
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/getProducts')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+      })
+  }, [])
+
   return (
 
     <Box sx={{ flexGrow: 1 }}>
@@ -32,11 +56,32 @@ export default function MyApp() {
         </Toolbar>
       </AppBar>
 
-
-
-          <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-          Lets put Login fun stuff here in!
-          </Box>
+      <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+      <div style={{ fontSize: '40px' }}> Finest Doughnuts</div>
+      <div>
+        {data.map((item, i) => (
+          <div style={{ padding: '20px', display: 'flex', alignItems: 'center' }} key={i}>
+            {/* Image */}
+            {item.image && (
+              <img
+                src={item.image}
+                alt={item.pname}
+                style={{ width: '80px', height: '80px', objectFit: 'cover', marginRight: '15px' }}
+              />
+            )}
+            {/* Text Content */}
+            <div>
+              <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.pname}</div>
+              <div style={{ fontSize: '13px'}}>{item.pdesc}</div>
+              <div>&euro;{item.price}</div>
+              <Button /* onClick={() =>  putInCart(item.pname, item.price)} */ variant="outlined">
+                Add to cart
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Box>
     </Box>
   );
 
