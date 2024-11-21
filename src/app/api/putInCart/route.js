@@ -6,9 +6,10 @@ export async function GET(req, res){
     // get the values
     const { searchParams } = new URL(req.url)
     const pname = searchParams.get('pname')
+    const price = parseFloat(req.query.price);
 
     console.log(pname);
-
+    console.log(price)
     // <-------------------------------------->
     //             Database call
 
@@ -24,7 +25,7 @@ export async function GET(req, res){
     const db = client.db(dbName);
     const collection = db.collection('shopping_cart'); // collection name
 
-    var myobj = { pname: pname, username: "sample@test.com"};
+    var myobj = { pname: pname, price: price, username: "sample@test.ie"};
     const insertResult = await collection.insertOne(myobj);
 
     // at the end of the process we need to send something back

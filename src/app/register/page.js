@@ -2,27 +2,40 @@
 
 import * as React from 'react';
 import { useState } from 'react';
-import { Button, TextField, AppBar, Box, Toolbar, Typography, IconButton, Container, Alert } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import {FormControlLabel, Checkbox} from '@mui/material';
+import { Button, TextField, AppBar, Box, Toolbar, Typography, IconButton, Alert } from '@mui/material';import Container from '@mui/material/Container';
+import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export default function MyApp() {
   const [message, setMessage] = useState(null); // To store success or error messages
   const [messageType, setMessageType] = useState("success"); // "success" or "error"
 
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password = data.get('password');
+    const username = data.get('username')?.trim();
+    const password = data.get('password')?.trim();
 
-    const accType = "customer"; // Hardcoded account type
+    const acc_type = "customer"; // Hardcoded account type. every user that registers is a customer
 
-    console.log("Registering user:", { email, password, accType });
+    console.log("Registering user:", { username, acc_type, password});
 
+    
     const response = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, accType }),
+      body: JSON.stringify({ username, acc_type, password}),
     });
 
     const result = await response.json();
@@ -35,57 +48,93 @@ export default function MyApp() {
     }
   };
 
-  return (
-    <Container maxWidth="ld">
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Krispy Kreme
-            </Typography>
-            <Button color="inherit" href='/login'>Login</Button>
-            <Button color="inherit" href='/register'>Register</Button>
-          </Toolbar>
-        </AppBar>
-      </Box>
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
-      <Box sx={{ mt: 4 }}>
+  const handleMouseUpPassword = (event) => {
+    event.preventDefault();
+  };
+
+  return (
+
+    
+    <Container maxWidth="x1">
+      <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+        <img src="Images/logo.png" width="64px" height="64px"></img>
+        <Button color="inherit" href='../dashboard'>Home</Button>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Krispy Kreme
+          </Typography>
+
+          <Button color="inherit" href='/login'>Login</Button>
+          <Button color="inherit" href='/register'>Register</Button>
+
+        </Toolbar>
+      </AppBar>
+
+    </Box>
+      <Box sx={{ height: 'x1' }} >
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="Email Address"
+          name="username"
+          autoComplete="email"
+          autoFocus
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
+
+        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <OutlinedInput
             id="password"
-            autoComplete="new-password"
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label={
+                    showPassword ? 'hide the password' : 'display the password'
+                  }
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  onMouseUp={handleMouseUpPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Register
+        </FormControl>
+
+        <FormControlLabel
+          control={<Checkbox value="remember" color="primary" />}
+          label="I AM NOT A ROBOT" required
+          />
+
+          <Button id="register"
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          >
+          Register
           </Button>
         </Box>
+      </Box>
 
-        {/* Display success or error message */}
-        {message && (
+      {message && (
           <Alert severity={messageType} sx={{ mt: 2 }}>
             {message}
           </Alert>
         )}
-      </Box>
     </Container>
-  );
+    ); // end return
 }

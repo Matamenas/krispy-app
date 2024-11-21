@@ -39,11 +39,9 @@ export default function MyApp() {
         })
 }, [])
 
-
-
-  function putInCart(pname){
-    console.log("Item %s added to cart", pname)
-    fetch("http://localhost:3000/api/putInCart?pname="+pname);
+  function putInCart(pname, price){
+    console.log("Item %s Price %f added to cart", pname, price)
+    fetch(`http://localhost:3000/api/putInCart?pname=${encodeURIComponent(pname)}&price=${price}`)
   }
 
   function runShowLogin(){
@@ -69,21 +67,10 @@ function runShowFirst(){
     <Box sx={{ flexGrow: 1 }}>
 
       <AppBar position="static">
-
+      
         <Toolbar>
-
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-
-            <MenuIcon />
-
-          </IconButton>
-
+        <img src="Images/logo.png" width="64px" height="64px"></img>
+        <Button color="inherit" href='../dashboard'>Home</Button>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Krispy Kreme
           </Typography>
@@ -98,24 +85,32 @@ function runShowFirst(){
 
 
       {showFirstPage &&
-
-      <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-            <div style={{fontSize: '40px'}} > Finest Doughnuts</div>
+    <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+      <div style={{ fontSize: '40px' }}> Finest Doughnuts</div>
+      <div>
+        {data.map((item, i) => (
+          <div style={{ padding: '20px', display: 'flex', alignItems: 'center' }} key={i}>
+            {/* Image */}
+            {item.image && (
+              <img
+                src={item.image}
+                alt={item.pname}
+                style={{ width: '80px', height: '80px', objectFit: 'cover', marginRight: '15px' }}
+              />
+            )}
+            {/* Text Content */}
             <div>
-          {
-            data.map((item, i) => (
-            <div style={{padding: '20px'}} key={i} >
-              <br></br>
-              {item.pname}
-              <br></br>
-              &euro;{item.price} 
-              <br></br>
-              <Button onClick={() => putInCart(item.pname)} variant="outlined"> Add to cart </Button>
-              </div>
-            ))
-          }
-        </div>
-      </Box>
+              <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.pname}</div>
+              <div style={{ fontSize: '13px'}}>{item.pdesc}</div>
+              <div>&euro;{item.price}</div>
+              <Button onClick={() => putInCart(item.pname, item.price)} variant="outlined">
+                Add to cart
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Box>
 
       }
 
@@ -131,7 +126,7 @@ function runShowFirst(){
 
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
      
-          Today's temperature: {JSON.stringify(weather.temp)}
+          Today's temperature: {JSON.stringify(weather.temp)}°C
 
           </Box>
       }

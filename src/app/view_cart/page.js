@@ -20,19 +20,8 @@ export default function MyApp() {
       <AppBar position="static">
 
         <Toolbar>
-
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-
-            <MenuIcon />
-
-          </IconButton>
-
+          <img src="Images/logo.png" width="64px" height="64px"></img>
+          <Button color="inherit" href='../dashboard'>Home</Button>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Krispy Kreme
           </Typography>
