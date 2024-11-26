@@ -56,14 +56,12 @@ export default function MyApp() {
 
   async function runDBCallAsync(url) {
     const res = await fetch(url);
-  
-    // Check if the response is OK (status 2xx)
+    // Check if the response is OK 
     if (!res.ok) {
       console.error("Login failed with status:", res.status);
       alert("Login failed. Please check your credentials.");
       return;
     }
-  
     try {
       // Attempt to parse the response as JSON
       const data = await res.json();

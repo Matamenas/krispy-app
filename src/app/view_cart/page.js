@@ -57,7 +57,7 @@ export default function MyApp() {
           <img src="Images/logo.png" width="64px" height="64px"></img>
           <Button color="inherit" href='../dashboard'>Home</Button>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Krispy Kreme
+            Krispy Kreme Basket
           </Typography>
           <Button color="inherit" href='/customer'>Forgot Something?</Button>
         </Toolbar>
@@ -82,7 +82,7 @@ export default function MyApp() {
       <div style={{fontSize: '20px', fontWeight: 'bold', marginTop: '20px'}}>
         Total Price: &euro;{(totalPrice).toFixed(2)}
       </div>
-      <Button color="success" href='/checkout'>Checkout</Button>
+      <Button variant='contained' color="success" href='/checkout'>Proceed To Checkout</Button>
 
     </Box>
     </Box>

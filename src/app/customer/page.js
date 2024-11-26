@@ -67,16 +67,10 @@ function runShowProducts(){
   setShowWeather(false)
 }
 
-function logOut(){
-  session.destroy();
-}
-
   return (
 
     <Box sx={{ flexGrow: 1 }}>
-
       <AppBar position="static">
-      
         <Toolbar>
         <img src="Images/logo.png" width="64px" height="64px"></img>
         <Button color="inherit" href='../dashboard'>Home</Button>
@@ -105,12 +99,13 @@ function logOut(){
                   style={{ width: '80px', height: '80px', objectFit: 'cover', marginRight: '15px' }}
                 />
               )}
-              {/* Text Content */}
-              <div>
+              {/* Text Content and Button to add to cart */}
+              <div> 
                 <div style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.pname}</div>
                 <div style={{ fontSize: '13px'}}>{item.pdesc}</div>
                 <div>&euro;{item.price}</div>
-                <Button onClick={() => putInCart(item.pname, item.price)} variant="outlined">
+
+                <Button onClick={() => putInCart(item.pname, item.price)} variant="outlined" color='secondary'>
                   Add to cart
                 </Button>
               </div>
@@ -123,9 +118,7 @@ function logOut(){
     {showWeather &&
 
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-     
           Today's temperature: {JSON.stringify(weather.temp)}°C
-
           </Box>
       }
     </Box>

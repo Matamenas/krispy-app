@@ -1,12 +1,10 @@
-import { getCustomSession } from '../sessionCode'
-import emailjs from '@emailjs/nodejs'
-
 export async function GET(req, res) {
 
     // Make a note we are on
-    // the GETCART api. This goes to the console.
 
-    console.log("in the getCart api page")
+    // the api. This goes to the console.
+
+    console.log("in the getProducts api page")
 
     // =================================================
 
@@ -17,13 +15,9 @@ export async function GET(req, res) {
     await client.connect();
     console.log('Connected successfully to server');
 
-    const session = await getCustomSession();
-    const username = session.email;
-    console.log("The Current User is: ", username);
-
     const db = client.db(dbName);
-    const collection = db.collection('shopping_cart'); // collection name
-    const findResult = await collection.find({username: username}).toArray();
+    const collection = db.collection('orders'); // collection name
+    const findResult = await collection.find({}).toArray();
     console.log('Found documents =>', findResult);
     client.close()
     //==========================================================s

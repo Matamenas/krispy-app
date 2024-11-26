@@ -9,9 +9,19 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 export default function MyApp() {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/getOrders')
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data)
+      })
+  }, [])
 
   return (
 
@@ -27,16 +37,32 @@ export default function MyApp() {
             Krispy Kreme
           </Typography>
 
-          <Button color="inherit" href='/login'>Login</Button>
-          <Button color="inherit" href='/register'>Register</Button>
 
         </Toolbar>
       </AppBar>
-
-
-
+      
           <Box component="section" sx={{ p: 2, border: '1px dashed grey'}}>
-          Lets put Login fun stuff here in!
+                <div style={{ fontSize: '40px' }}>Managers Review Of Orders</div>
+                <div>
+                    {console.log(data)}
+                    {data.map((item, i) => (
+                        <div style={{ padding: '20px' }} key={i}>
+                          ______________________________________________________________________________________________________________
+                          <br></br>
+                            Unique ID: {item._id}
+                            <br />
+                            Amount Ordered: {item.itemCount}
+                            <br></br>
+                            Total Price: &euro;{parseFloat((item.totalPrice).toFixed(2))}
+                            <br />
+                            Ordered by: {item.username}
+                            <br></br>
+                            At: {item.Timestamp}
+                            <br></br>
+                          _______________________________________________________________________________________________________________
+                        </div>
+                    ))}
+                </div>
           </Box>
     </Box>
   );
