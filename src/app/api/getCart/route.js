@@ -1,5 +1,4 @@
 import { getCustomSession } from '../sessionCode'
-import emailjs from '@emailjs/nodejs'
 
 export async function GET(req, res) {
 
