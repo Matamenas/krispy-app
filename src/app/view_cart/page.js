@@ -30,7 +30,7 @@ export default function MyApp() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/getCart')
+    fetch('/api/getCart')
       .then((res) => res.json())
       .then((data) => {
         setData(data)

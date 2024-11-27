@@ -51,7 +51,7 @@ export default function MyApp() {
     console.log("Sent pass:" + pass)
     console.log("Sent acc_type:" + acc_type)
 
-    runDBCallAsync(`http://localhost:3000/api/login?username=${email}&password=${pass}&acc_type=${acc_type}`)
+    runDBCallAsync(`/api/login?username=${email}&password=${pass}&acc_type=${acc_type}`)
   };
 
   async function runDBCallAsync(url) {

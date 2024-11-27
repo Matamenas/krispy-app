@@ -29,7 +29,7 @@ export default function MyApp() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/getCart')
+    fetch('/api/getCart')
       .then((res) => res.json())
       .then((data) => {
         console.log('Data from getCart:', data);
@@ -51,7 +51,7 @@ export default function MyApp() {
 
   function placeOrder(itemCount, totalPrice) {
     console.log('Placing order:', { itemCount, totalPrice });
-    fetch(`http://localhost:3000/api/checkOut?itemCount=${itemCount}&totalPrice=${totalPrice}`)
+    fetch(`/api/checkOut?itemCount=${itemCount}&totalPrice=${totalPrice}`)
       .then((res) => res.json())
       .then((data) => {
         console.log('Order response', data);
@@ -84,7 +84,7 @@ export default function MyApp() {
       Host: "smtp.gmail.com",
       Username: "matasbagdonas@gmail.com",
       Password: "Mb022889",
-      To: session,
+      To: session.email,
       From: "Krispy-Kreme@Official.ie",
       Subject: "Order Confirmed",
       Body: `Your order of ${itemCount} items with the total price of €${totalPrice.toFixed(2)} has been placed.`,

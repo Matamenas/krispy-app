@@ -38,14 +38,14 @@ export default function MyApp() {
   
  
     useEffect(() => {
-      fetch('http://localhost:3000/api/getProducts')
+      fetch('/api/getProducts')
         .then((res) => res.json())
         .then((data) => {
           setData(data)
         })
 
         // call the api for getting weather
-        fetch('http://localhost:3000/api/getWeather')
+        fetch('/api/getWeather')
           .then((res) => res.json()) 
           .then((weather) => {
             setWeatherData(weather)
@@ -54,7 +54,7 @@ export default function MyApp() {
 
   function putInCart(pname, price){
     console.log("Item %s Price %f added to cart", pname, price)
-    fetch(`http://localhost:3000/api/putInCart?pname=${pname}&price=${price}`)
+    fetch(`/api/putInCart?pname=${pname}&price=${price}`)
   }
 
   function runShowWeather(){
