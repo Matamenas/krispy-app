@@ -6,7 +6,7 @@ export async function POST(req) {
 
     const acc_type = "customer"; // Enforce account type on the server
 
-    const url = 'process.env.DB_ADDRESS';
+    const url = 'mongodb+srv://b00149694:AdFSCKDDixpyPWZI@krispykremedb.hwsne.mongodb.net/?retryWrites=true&w=majority&appName=KrispyKremeDB';
     const client = new MongoClient(url);
 
     await client.connect();
