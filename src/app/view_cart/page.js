@@ -16,6 +16,7 @@ export default function MyApp() {
   const [data, setData] = useState([])
   const [totalPrice, setTotalPrice] = useState(0);
 
+  // get the session of the user
   useEffect(() => {
     async function fetchSession() {
       const response = await fetch('/api/getSession');
@@ -29,6 +30,7 @@ export default function MyApp() {
     fetchSession();
   }, []);
 
+  // call getCart api,
   useEffect(() => {
     fetch('/api/getCart')
       .then((res) => res.json())

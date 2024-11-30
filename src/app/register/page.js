@@ -21,6 +21,7 @@ export default function MyApp() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
+  // on submit get data and send to register api, api handles the rest
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,17 +49,7 @@ export default function MyApp() {
     }
   };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const handleMouseUpPassword = (event) => {
-    event.preventDefault();
-  };
-
   return (
-
-    
     <Container maxWidth="x1">
       <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -101,8 +92,6 @@ export default function MyApp() {
                     showPassword ? 'hide the password' : 'display the password'
                   }
                   onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  onMouseUp={handleMouseUpPassword}
                   edge="end"
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}

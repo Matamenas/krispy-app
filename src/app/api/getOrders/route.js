@@ -9,7 +9,7 @@ export async function GET(req, res) {
     // =================================================
 
     const { MongoClient } = require('mongodb');
-    const url = 'process.env.DB_ADDRESS';
+    const url = 'mongodb+srv://b00149694:AdFSCKDDixpyPWZI@krispykremedb.hwsne.mongodb.net/?retryWrites=true&w=majority&appName=KrispyKremeDB';
     const client = new MongoClient(url);
     const dbName = 'KrispyKreme'; // database name
     await client.connect();

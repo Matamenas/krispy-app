@@ -39,6 +39,7 @@ export default function MyApp() {
     setAcc_type(event.target.value);
   }
 
+  // on submit get data and send over to the login api, api handles the rest
   const handleSubmit = (event) => {
 
     console.log("handling submit");
@@ -47,11 +48,11 @@ export default function MyApp() {
     let email = data.get('username')
     let pass = data.get('password')
     let acc_type = data.get('acc_type')
-    console.log("Sent email:" + email)
-    console.log("Sent pass:" + pass)
-    console.log("Sent acc_type:" + acc_type)
+    console.log("Sent email:" + email);
+    console.log("Sent pass:" + pass);
+    console.log("Sent acc_type:" + acc_type);
 
-    runDBCallAsync(`http://localhost:3000/api/login?username=${email}&password=${pass}&acc_type=${acc_type}`)
+    runDBCallAsync(`/api/login?username=${email}&password=${pass}&acc_type=${acc_type}`)
   };
 
   async function runDBCallAsync(url) {
@@ -80,14 +81,6 @@ export default function MyApp() {
       alert("Unexpected error occurred. Please try again later.");
     }
   }
-
-    const handleMouseDownPassword = (event) => {
-      event.preventDefault();
-    };
-  
-    const handleMouseUpPassword = (event) => {
-      event.preventDefault();
-    };
 
   return (
 
@@ -134,8 +127,6 @@ export default function MyApp() {
                     showPassword ? 'hide the password' : 'display the password'
                   }
                   onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  onMouseUp={handleMouseUpPassword}
                   edge="end"
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}

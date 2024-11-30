@@ -13,6 +13,7 @@ export default function MyApp() {
   const [itemCount, setItemCount] = useState(0);
   const [session, setSession] = useState(null);
 
+  // call session
   useEffect(() => {
     async function fetchSession() {
       const response = await fetch('/api/getSession');
@@ -28,8 +29,9 @@ export default function MyApp() {
     fetchSession();
   }, []);
 
+  // call the getCart api to get the users cart
   useEffect(() => {
-    fetch('/api/getCart')
+    fetch('http://localhost:3000/api/getCart')
       .then((res) => res.json())
       .then((data) => {
         console.log('Data from getCart:', data);
@@ -43,12 +45,14 @@ export default function MyApp() {
 
         setTotalPrice(total);
 
+        // get the total count of items
         const count = data.length;
         setItemCount(count);
       })
       .catch((error) => console.error('Error fetching getCart:', error));
   }, []);
 
+  // method used for the button to send the users data to checkout api
   function placeOrder(itemCount, totalPrice) {
     console.log('Placing order:', { itemCount, totalPrice });
     fetch(`/api/checkOut?itemCount=${itemCount}&totalPrice=${totalPrice}`)
@@ -59,6 +63,7 @@ export default function MyApp() {
       .catch((error) => console.error('Error placing order', error));
   }
 
+  // call upon an email script
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://smtpjs.com/v3/smtp.js";
@@ -70,6 +75,8 @@ export default function MyApp() {
       document.body.removeChild(script);
     };
   }, []);
+
+  // function to send email
   function sendEmail(){
     if(!session || !session.email) {
       alert("Session not found or email is missing, please log in");
@@ -80,6 +87,7 @@ export default function MyApp() {
       return;
     }
 
+    // send email to currently logged in user that order is confirmed
     Email.send({
       Host: "smtp.gmail.com",
       Username: "matasbagdonas@gmail.com",

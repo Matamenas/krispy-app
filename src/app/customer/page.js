@@ -22,6 +22,7 @@ export default function MyApp() {
   // This is for getting the products
   const [data, setData] = useState([])
 
+  // get current session
   useEffect(() => {
     async function fetchSession() {
       const response = await fetch('/api/getSession');
@@ -37,6 +38,7 @@ export default function MyApp() {
   }, []);
   
  
+    // call the api to get products
     useEffect(() => {
       fetch('/api/getProducts')
         .then((res) => res.json())
@@ -52,20 +54,23 @@ export default function MyApp() {
         })
     }, [])
 
+  // function used for each "add to cart" button to add items to their cart
   function putInCart(pname, price){
     console.log("Item %s Price %f added to cart", pname, price)
     fetch(`/api/putInCart?pname=${pname}&price=${price}`)
   }
 
+  // navigation function to hide products and show weather
   function runShowWeather(){
     setShowProducts(false);
     setShowWeather(true)
 }
 
-function runShowProducts(){
-  setShowProducts(true);
-  setShowWeather(false)
-}
+  // navigation function to show products and hide weather
+  function runShowProducts(){
+    setShowProducts(true);
+    setShowWeather(false)
+  }
 
   return (
 

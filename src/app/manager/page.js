@@ -15,6 +15,7 @@ export default function MyApp() {
 
   const [data, setData] = useState([]);
 
+  // get data from getOrders api
   useEffect(() => {
     fetch('/api/getOrders')
       .then((res) => res.json())
