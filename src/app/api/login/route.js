@@ -10,6 +10,7 @@ export async function GET(req) {
   const email = searchParams.get('username')?.trim();
   const pass = searchParams.get('password')?.trim();
   const acc_type = searchParams.get('acc_type')?.trim();
+  
 
   console.log('Received inputs after trimming:', { email, pass, acc_type });
 
@@ -25,13 +26,17 @@ export async function GET(req) {
   const collection = db.collection('login');
   
   // Query the database
-  const findResult = await collection.findOne({
+  const findResult = await collection.find({
     username: email,
-    password: pass,
-    acc_type: acc_type,
-  });
+  }).toArray();
 
-  if (findResult) {
+  const bcrypt = require('bcrypt');
+  let hashResult = await bcrypt.compareSync(pass, findResult[0].password);
+
+  console.log("checking: " + findResult[0].pass);
+  console.log("Hash Comparison Result " + hashResult);
+
+  if (hashResult) {
     console.log('Login valid');
     // Save user information in the session
     session.acc_type = acc_type;

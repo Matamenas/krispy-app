@@ -4,6 +4,11 @@ export async function POST(req) {
   try {
     const { username, password } = await req.json();
 
+    const bcrypt = require('bcrypt');
+    const saltRounds = 10;
+
+    const hash = bcrypt.hashSync(password, saltRounds);
+
     const acc_type = "customer"; // Enforce account type on the server
 
     const url = 'mongodb+srv://b00149694:AdFSCKDDixpyPWZI@krispykremedb.hwsne.mongodb.net/?retryWrites=true&w=majority&appName=KrispyKremeDB';
@@ -20,7 +25,7 @@ export async function POST(req) {
     }
 
     // Insert new user
-    await collection.insertOne({ username, acc_type, password });
+    await collection.insertOne({ username, acc_type, password: hash });
     return new Response(JSON.stringify({ success: true }), { status: 200 });
   } catch (error) {
     console.error("Error:", error);

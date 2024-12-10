@@ -2,6 +2,11 @@
 'use client'
 
 import * as React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -39,20 +44,52 @@ export default function MyApp() {
     setAcc_type(event.target.value);
   }
 
+  const validateForm = (event) => {
+    let errorMessage = '';
+
+    const data = new FormData(event.currentTarget);
+
+    // Get the email
+    let email = data.get('username');
+
+    // call the validator
+    var validator = require('email-validator');
+
+    // run the validator
+    let emailCheck = validator.validate(email);
+
+    // print whether the email is good or not
+    console.log("Email status " + emailCheck);
+
+    // if it is false, send an error message
+    if(emailCheck == false){
+      errorMessage += 'Incorrect Email';
+    }
+    return errorMessage;
+  }
+
   // on submit get data and send over to the login api, api handles the rest
   const handleSubmit = (event) => {
-
     console.log("handling submit");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let email = data.get('username')
-    let pass = data.get('password')
-    let acc_type = data.get('acc_type')
-    console.log("Sent email:" + email);
-    console.log("Sent pass:" + pass);
-    console.log("Sent acc_type:" + acc_type);
+    // call out custom validator
+    let errorMessage = validateForm(event);
+    // save the message
+    setErrorHolder(errorMessage);
+    // if we have an error
+    if(errorMessage.length > 0){
+      setOpen(true)
+    } else {
+      const data = new FormData(event.currentTarget);
+      let email = data.get('username')
+      let pass = data.get('password')
+      let acc_type = data.get('acc_type')
+      console.log("Sent email:" + email);
+      console.log("Sent pass:" + pass);
+      console.log("Sent acc_type:" + acc_type);
 
-    runDBCallAsync(`/api/login?username=${email}&password=${pass}&acc_type=${acc_type}`)
+      runDBCallAsync(`/api/login?username=${email}&password=${pass}&acc_type=${acc_type}`)
+    }
   };
 
   async function runDBCallAsync(url) {
@@ -81,6 +118,18 @@ export default function MyApp() {
       alert("Unexpected error occurred. Please try again later.");
     }
   }
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [errorHolder, setErrorHolder] = React.useState(false);
 
   return (
 
@@ -119,6 +168,7 @@ export default function MyApp() {
           <OutlinedInput
             id="password"
             name="password"
+            maxLength="20"
             type={showPassword ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">
@@ -166,6 +216,28 @@ export default function MyApp() {
           </Button>
         </Box>
       </Box>
+      <React.Fragment>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Error"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                {errorHolder}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} autoFocus>
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </React.Fragment>
     </Container>
     ); // end return
 }
