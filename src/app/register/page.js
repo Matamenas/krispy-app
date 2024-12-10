@@ -13,6 +13,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import jsesc from 'jsesc';
 
 export default function MyApp() {
   const [message, setMessage] = useState(null); // To store success or error messages
@@ -28,8 +29,9 @@ export default function MyApp() {
 
     const data = new FormData(event.currentTarget);
 
-    // Get the email
-    let email = data.get('username');
+    // Get the email and pass
+    let email = jsesc(data.get('username'));
+    let pass = jsesc(data.get('password'));
 
     // call the validator
     var validator = require('email-validator');
@@ -42,7 +44,11 @@ export default function MyApp() {
 
     // if it is false, send an error message
     if(emailCheck == false){
-      errorMessage += 'Incorrect Email';
+      errorMessage += 'Incorrect Email!';
+    }
+    // if no password has been entered
+    if(!pass){
+      errorMessage += ' Password Required.'
     }
     return errorMessage;
   }
@@ -118,7 +124,6 @@ export default function MyApp() {
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
           margin="normal"
-          required
           fullWidth
           id="username"
           label="Email Address"
@@ -134,7 +139,7 @@ export default function MyApp() {
             name="password"
             maxLength="20"
             type={showPassword ? 'text' : 'password'}
-            required
+          
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
