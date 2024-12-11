@@ -32,6 +32,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Select } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
+import jsesc from 'jsesc';
+
 export default function MyApp() {
 
   // variables needed to allow to show or hide the password
@@ -50,7 +52,8 @@ export default function MyApp() {
     const data = new FormData(event.currentTarget);
 
     // Get the email
-    let email = data.get('username');
+    let email = jsesc(data.get('username'));
+    let pass = jsesc(data.get('password'));
 
     // call the validator
     var validator = require('email-validator');
@@ -63,7 +66,15 @@ export default function MyApp() {
 
     // if it is false, send an error message
     if(emailCheck == false){
-      errorMessage += 'Incorrect Email';
+      errorMessage += ' Incorrect Email! ';
+    }
+    // if no password has been entered
+    if(!pass){
+      errorMessage += ' Password Required. '
+    }
+
+    if (pass.length > 16){
+      errorMessage += ' Password must be less than 16 characters! '
     }
     return errorMessage;
   }
@@ -154,7 +165,6 @@ export default function MyApp() {
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
           margin="normal"
-          required
           fullWidth
           id="username"
           label="Email Address"
@@ -168,7 +178,6 @@ export default function MyApp() {
           <OutlinedInput
             id="password"
             name="password"
-            maxLength="20"
             type={showPassword ? 'text' : 'password'}
             endAdornment={
               <InputAdornment position="end">

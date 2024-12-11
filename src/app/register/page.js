@@ -36,7 +36,7 @@ export default function MyApp() {
     // call the validator
     var validator = require('email-validator');
 
-    // run the validator
+    // run the validator65665
     let emailCheck = validator.validate(email);
 
     // print whether the email is good or not
@@ -44,11 +44,14 @@ export default function MyApp() {
 
     // if it is false, send an error message
     if(emailCheck == false){
-      errorMessage += 'Incorrect Email!';
+      errorMessage += ' Incorrect Email! ';
     }
     // if no password has been entered
     if(!pass){
-      errorMessage += ' Password Required.'
+      errorMessage += ' Password Required. '
+    }
+    if (pass.length > 16){
+      errorMessage += ' Password must be less than 16 characters! '
     }
     return errorMessage;
   }
@@ -137,7 +140,6 @@ export default function MyApp() {
           <OutlinedInput
             id="password"
             name="password"
-            maxLength="20"
             type={showPassword ? 'text' : 'password'}
           
             endAdornment={
